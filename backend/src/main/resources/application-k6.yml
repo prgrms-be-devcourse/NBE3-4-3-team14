@@ -1,0 +1,34 @@
+# k6 테스트용 환경 설정
+server:
+  url: http://localhost:8081/
+
+spring:
+  elasticsearch:
+    uris: http://webty-k6-elasticsearch:9200
+
+  datasource:
+    url: jdbc:mysql://webty-mysql-k6:3306/webty_k6_db
+    username: k6_user
+    password: k6_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+
+  data:
+    redis:
+      host: webty-k6-redis
+      port: 6379
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            redirect-uri: ${server.url}${app.oauth2.redirect-uri-suffix}
